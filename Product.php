@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-class Product
+require_once 'DisplayInterface.php';
+
+abstract class Product implements DisplayInterface
 {
-    private $name;
+    protected $name;
 
-    private $description;
+    protected $description;
 
-    private $price;
+    protected $price;
 
     public function __construct(string $name = null, string $description = null, float $price = null)
     {
@@ -49,6 +51,11 @@ class Product
     }
 
     public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    protected function getFormattedPrice(): float
     {
         return $this->price;
     }
