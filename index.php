@@ -1,7 +1,8 @@
 <?php
 
-require_once 'Instrument.php';
-require_once 'Disc.php';
+namespace App;
+
+require __DIR__.'/vendor/autoload.php';
 
 $product1 = new Instrument('Guitare', 'Guitare folk', 124.10, Instrument::TYPE_GUITARE);
 

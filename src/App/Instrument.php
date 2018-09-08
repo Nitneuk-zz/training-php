@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once 'Product.php';
+namespace App;
 
 class Instrument extends Product
 {

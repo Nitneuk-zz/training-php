@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-require_once 'DisplayInterface.php';
+namespace App;
+
+use App\Interfaces\DisplayInterface;
 
 abstract class Product implements DisplayInterface
 {

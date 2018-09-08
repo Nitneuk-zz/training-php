@@ -1,0 +1,25 @@
+{
+  "name": "nitneuk/training-php",
+  "license": "gpl",
+  "type": "project",
+  "description": "Project for php training",
+  "authors": [
+    {
+      "name": "Quentin Barloy",
+      "email": "quentin@les-tilleuls.coop"
+    },
+    {
+      "name": "Les-Tilleuls.coop",
+      "email": "tech@les-tilleuls.coop",
+      "homepage": "http://les-tilleuls.coop"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/App/"
+    }
+  },
+  "require": {
+    "php": ">=7.1"
+  }
+}
