@@ -1,0 +1,12 @@
+{% if product.type is defined %}
+<strong>Instrument :</strong>
+{% else %}
+<strong>Disc :</strong>
+{% endif %}
+
+<p>
+    {{ product.name|upper }}<br/>
+    {{ product.description }}<br/>
+    {{ product.price }} €
+</p>
+<hr/>
