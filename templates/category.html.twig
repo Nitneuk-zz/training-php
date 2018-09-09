@@ -1,0 +1,8 @@
+<h2>{{ category.name }} :</h2>
+
+<p>{{ category.description }}</p>
+<h3>{{ products|length }} résultats : </h3>
+
+{% for product in products %}
+    {% include 'product.html.twig' with {product: product} %}
+{% endfor %}

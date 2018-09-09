@@ -2,24 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
-use App\Interfaces\DisplayInterface;
-
-abstract class Product implements DisplayInterface
+abstract class Product implements ModelInterface
 {
+    public const TYPE_GUITAR = 'guitar';
+    public const TYPE_PIANO = 'piano';
+    public const TYPE_DISC = 'disc';
+
     protected $name;
 
     protected $description;
 
     protected $price;
 
-    public function __construct(string $name = null, string $description = null, float $price = null)
-    {
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-    }
+    private $type;
 
     public function setName(string $name): self
     {
@@ -45,9 +42,9 @@ abstract class Product implements DisplayInterface
         return $this->description;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(string $price): self
     {
-        $this->price = $price;
+        $this->price = (float) $price;
 
         return $this;
     }
@@ -57,8 +54,19 @@ abstract class Product implements DisplayInterface
         return $this->price;
     }
 
-    protected function getFormattedPrice(): float
+    public function setType(string $type): self
     {
-        return $this->price;
+        if (!in_array($type, [self::TYPE_GUITAR, self::TYPE_PIANO, self::TYPE_DISC, true])) {
+            throw new \Exception('Invalid type exception');
+        }
+
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

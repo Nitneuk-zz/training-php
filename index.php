@@ -2,24 +2,33 @@
 
 namespace App;
 
+use App\Models\Repository\CategoryRepository;
+use App\Models\Repository\ProductRepository;
+
 require __DIR__.'/vendor/autoload.php';
 
 $loader = new \Twig_Loader_Filesystem('templates');
 $twig = new \Twig_Environment($loader);
 
-$product1 = new Instrument('Guitare', 'Guitare folk', 124.10, Instrument::TYPE_GUITARE);
+$dataProvider = new DataProvider(
+    'mysql',
+        'root',
+    'root',
+    'music_shop'
+);
 
-$product2 = new Disc();
-$product2
-    ->setName('Electric Ladyland')
-    ->setDescription('Apprends a jouer les meilleurds chansons d\'Hendrix')
-    ->setPrice(15.99)
-    ->setArtist('Jimi Hendrix')
-;
+$dataProvider->connect();
 
-$products = [$product1, $product2];
+$categoryRepository = new CategoryRepository($dataProvider);
+$categories = $categoryRepository->findForMenu();
 
-foreach ($products as $product) {
-    echo $twig->render('product.html.twig', array('product' => $product));
-}
+echo $twig->render('menu.html.twig', ['categories' => $categories]);
 
+$category = $categories[1]->getChildren()[0];
+$productRepository = new ProductRepository($dataProvider);
+$products = $productRepository->findForCategory($category);
+
+echo $twig->render('category.html.twig', [
+    'category' => $category,
+    'products' => $products,
+]);

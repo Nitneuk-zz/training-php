@@ -1,0 +1,10 @@
+<ul>
+    {% for category in categories %}
+        <li>
+            {{ category.name }}
+            {% if category.children is defined %}
+                {% include 'menu.html.twig' with {categories: category.children} %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

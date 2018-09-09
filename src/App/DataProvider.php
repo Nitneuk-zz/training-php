@@ -6,6 +6,9 @@ namespace App;
 
 class DataProvider
 {
+    /**
+     * @var \PDO
+     */
     private $connection;
 
     public function __construct(string $host, string $login, string $password, string $databaseName = null)
@@ -20,9 +23,10 @@ class DataProvider
     {
         try {
             $this->connection = new \PDO(
-                \sprintf('mysql:host=%s;dbname=%s', $this->host, $this->password),
+                \sprintf('mysql:host=%s;dbname=%s', $this->host, $this->databaseName),
                 $this->login,
-                $this->password
+                $this->password,
+                [\PDO::ATTR_PERSISTENT => true]
             );
         } catch (\PDOException $e) {
             print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -30,8 +34,21 @@ class DataProvider
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function executeQuery(string $sql)
     {
+        if (null === $this->connection) {
+            throw new \Exception('You must connect before executing query');
+        }
 
+        if (!$result = $this->connection->query($sql)) {
+            throw new \Exception(
+                \sprintf('Unable to perform query : %d "%s"', $this->connection->errorCode(), $this->connection->errorInfo())
+            );
+        }
+
+        return $result;
     }
 }
