@@ -21,17 +21,17 @@ class DataProvider
 
     public function connect()
     {
-        try {
-            $this->connection = new \PDO(
-                \sprintf('mysql:host=%s;dbname=%s', $this->host, $this->databaseName),
-                $this->login,
-                $this->password,
-                [\PDO::ATTR_PERSISTENT => true]
-            );
-        } catch (\PDOException $e) {
-            print "Erreur !: " . $e->getMessage() . "<br/>";
-            die();
-        }
+        $this->connection = new \PDO(
+            \sprintf('mysql:host=%s;dbname=%s', $this->host, $this->databaseName),
+            $this->login,
+            $this->password,
+            [\PDO::ATTR_PERSISTENT => true]
+        );
+    }
+
+    public function disconnect()
+    {
+        $this->connection = null;
     }
 
     /**
